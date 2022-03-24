@@ -123,7 +123,6 @@ export class Cat{
   setMotion(motion){
     this.prevMotion = this.motion;
     if(this.prevMotion === MOTION.walkleft){
-      console.log(MOTION.standleft);
       this.motion = MOTION.standleft;
     }else if(this.prevMotion === MOTION.walkright){
       this.motion = MOTION.standright;

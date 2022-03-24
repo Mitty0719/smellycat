@@ -1,4 +1,5 @@
 import { Cat } from './module/cat.js';
+import { Text } from './module/text.js';
 
 class App{
   constructor(){
@@ -12,37 +13,50 @@ class App{
         isDown: false
       },
     }
+    WebFont.load({
+      google: {
+        families: ['Indie Flower']
+      }
+    });
+    this.texts = [];
 
     this.resize();
     this.setApplication();
     window.addEventListener('keydown', this.keydown.bind(this));
     window.addEventListener('keyup', this.keyup.bind(this));
+
+    setTimeout(()=>{
+      const sampleText = new Text('S m e l l y  C a t', 'title', 1000, 1000, this.app);
+      sampleText.createText(this.stageWidth, this.stageHeight);
+      this.texts.push(sampleText);
+    }, 2000);
+
   }
 
   resize(){
-    this.canvasWidth = window.innerWidth;
-    this.canvasHeight = window.innerHeight;
+    this.stageWidth = window.innerWidth;
+    this.stageHeight = window.innerHeight;
 
     if(this.app){
-      this.app.width = this.canvasWidth;
-      this.app.height = this.canvasHeight;
+      this.app.width = this.stageWidth;
+      this.app.height = this.stageHeight;
     }
     if(this.background){
-      this.background.width = this.canvasWidth;
-      this.background.height = this.canvasHeight;
+      this.background.width = this.stageWidth;
+      this.background.height = this.stageHeight;
     }
   }
 
   setApplication(){
-    this.app = new PIXI.Application({width: this.canvasWidth, height: this.canvasHeight});
+    this.app = new PIXI.Application({width: this.stageWidth, height: this.stageHeight});
     document.body.appendChild(this.app.view);
 
     this.background = PIXI.Sprite.from('./images/noonbackground.png');
-    this.background.width = this.canvasWidth;
-    this.background.height = this.canvasHeight;
+    this.background.width = this.stageWidth;
+    this.background.height = this.stageHeight;
     this.app.stage.addChild(this.background);
 
-    this.cat = new Cat(100, 450);
+    this.cat = new Cat(100, this.stageHeight / 1.6);
     this.app.loader.add('spritesheet', `./images/cats/black_gold_eyes.png`)
     .load(this.cat.create.bind(this.cat, this.app.stage))
     .load(this.animate.bind(this));
@@ -69,6 +83,10 @@ class App{
   animate(){
     requestAnimationFrame(this.animate.bind(this));
     this.cat.draw();
+
+    for(let i = 0; i < this.texts.length; i++){
+      this.texts[i].draw();
+    }
   }
 }
 
