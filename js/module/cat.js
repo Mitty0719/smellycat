@@ -1,4 +1,16 @@
 const MOTION = {
+  standleft: {
+    scene: 1,
+    pos: [
+      [1, 6]
+    ]
+  },
+  standright: {
+    scene: 1,
+    pos: [
+      [0, 8]
+    ]
+  },
   liedown: {
     scene: 9,
     pos: [
@@ -73,17 +85,15 @@ const MOTION = {
 const ASSET_WIDTH = 32, ASSET_HEIGHT = 32;
 
 export class Cat{
-  constructor(x, y, app){
+  constructor(x, y){
     this.x = x;
     this.y = y;
-    this.speed = 1;
-    this.motion = MOTION.walkleft;
-    
-    app.loader.add('spritesheet', `./images/cats/black_gold_eyes.png`).load(this.create.bind(this, app.stage));
+    this.speed = 3;
+    this.motion = MOTION.standright;
+    this.prevMotion = null;
   }
   create(stage){
     let motionCnt = 0;
-
     const texture = PIXI.Texture.from(`./images/cats/black_gold_eyes.png`);
     const rect = new PIXI.Rectangle(0, 0, ASSET_WIDTH, ASSET_HEIGHT);
     texture.frame = rect;
@@ -94,14 +104,13 @@ export class Cat{
         motionCnt = 0;
       }
       this.sprite.texture.frame = rect;
-      console.log(this.motion.pos[motionCnt], motionCnt);
       rect.x = ASSET_WIDTH * this.motion.pos[motionCnt][0];
       rect.y = ASSET_WIDTH * this.motion.pos[motionCnt][1];
     }, 80);
 
     this.sprite = new PIXI.Sprite(texture);
-    this.sprite.position.set(300, 300);
-    this.sprite.scale.set(2, 2);
+    this.sprite.position.set(this.x, this.y);
+    this.sprite.scale.set(3, 3);
 
     stage.addChild(this.sprite);
   }
@@ -111,7 +120,25 @@ export class Cat{
     this.sprite.y = this.y;
   }
 
-  animate(){
+  setMotion(motion){
+    this.prevMotion = this.motion;
+    if(this.prevMotion === MOTION.walkleft){
+      console.log(MOTION.standleft);
+      this.motion = MOTION.standleft;
+    }else if(this.prevMotion === MOTION.walkright){
+      this.motion = MOTION.standright;
+    }else{
+      this.motion = motion;
+    }
+  }
 
+  move(code){
+    if(code === 'ArrowLeft'){
+      this.motion = MOTION.walkleft;
+      this.x -= this.speed;
+    }else if(code === 'ArrowRight'){
+      this.motion = MOTION.walkright;
+      this.x += this.speed;
+    }
   }
 }
