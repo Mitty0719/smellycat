@@ -85,12 +85,14 @@ const MOTION = {
 const ASSET_WIDTH = 32, ASSET_HEIGHT = 32;
 
 export class Cat{
-  constructor(x, y){
+  constructor(stageWidth, stageHeight, x, y){
     this.x = x;
     this.y = y;
     this.speed = 3;
     this.motion = MOTION.standright;
     this.prevMotion = null;
+
+    this.resize(stageWidth, stageHeight);
   }
   create(stage){
     let motionCnt = 0;
@@ -115,6 +117,11 @@ export class Cat{
     stage.addChild(this.sprite);
   }
 
+  resize(stageWidth, stageHeight){
+    this.stageWidth = stageWidth;
+    this.stageHeight = stageHeight;
+  }
+
   draw(){
     this.sprite.x = this.x;
     this.sprite.y = this.y;
@@ -131,13 +138,23 @@ export class Cat{
     }
   }
 
-  move(code){
+  move(code, isCenter){
     if(code === 'ArrowLeft'){
       this.motion = MOTION.walkleft;
-      this.x -= this.speed;
+      if(!isCenter){
+        this.x -= this.speed;
+      }
     }else if(code === 'ArrowRight'){
       this.motion = MOTION.walkright;
-      this.x += this.speed;
+      if(!isCenter){
+        this.x += this.speed;
+      }
     }
+  }
+  checkCenter(){
+    if(this.x > this.stageWidth / 2){
+      return true;
+    }
+    return false;
   }
 }

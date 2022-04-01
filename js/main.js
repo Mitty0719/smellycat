@@ -24,6 +24,7 @@ class App{
     this.setApplication();
     window.addEventListener('keydown', this.keydown.bind(this));
     window.addEventListener('keyup', this.keyup.bind(this));
+    window.addEventListener('resize', this.resize.bind(this));
 
     setTimeout(()=>{
       const sampleText = new Text('S m e l l y  C a t', 'title', 1000, 1000, this.app);
@@ -52,11 +53,11 @@ class App{
     document.body.appendChild(this.app.view);
 
     this.background = PIXI.Sprite.from('./images/noonbackground.png');
-    this.background.width = this.stageWidth;
+    this.background.width = this.stageWidth * 10;
     this.background.height = this.stageHeight;
     this.app.stage.addChild(this.background);
 
-    this.cat = new Cat(100, this.stageHeight / 1.6);
+    this.cat = new Cat(this.stageWidth, this.stageHeight, 100, this.stageHeight / 1.6);
     this.app.loader.add('spritesheet', `./images/cats/black_gold_eyes.png`)
     .load(this.cat.create.bind(this.cat, this.app.stage))
     .load(this.animate.bind(this));
@@ -67,7 +68,8 @@ class App{
     if(keyInfo && !keyInfo.isDown){
       keyInfo.isDown = true;
       keyInfo.idle = setInterval(()=>{
-        this.cat.move(e.code);
+        const isCenter = this.cat.checkCenter();
+        this.cat.move(e.code, isCenter);
       }, 10);
     }
   };
