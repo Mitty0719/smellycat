@@ -1,6 +1,7 @@
 import { Background } from './module/background.js';
 import { Cat } from './module/cat.js';
 import { Text } from './module/text.js';
+import { Cloud } from './module/cloud.js';
 
 class App{
   constructor(){
@@ -20,6 +21,8 @@ class App{
       }
     });
     this.texts = [];
+    this.clouds = [];
+    this.cloudCnt = 1;
 
     this.resize();
     this.setApplication();
@@ -57,9 +60,16 @@ class App{
     this.background.create(this.app.stage);
 
     this.cat = new Cat(this.stageWidth, this.stageHeight, 100, this.stageHeight / 1.6);
-    this.app.loader.add('spritesheet', `./images/cats/black_gold_eyes.png`)
-    .load(this.cat.create.bind(this.cat, this.app.stage))
+    this.app.loader.add('cat', `./images/cats/black_gold_eyes.png`)
+    .add('cloud1', './images/cloud/cloud1.png')
+    .add('cloud2', './images/cloud/cloud2.png')
+    .load(this.createElement.bind(this))
     .load(this.animate.bind(this));
+
+  }
+  createElement(){
+    this.cat.create(this.app.stage);
+    this.createCloud();
   }
 
   keydown(e){
@@ -89,8 +99,25 @@ class App{
     for(let i = 0; i < this.texts.length; i++){
       this.texts[i].draw();
     }
+
+    for(let i = 0; i < this.clouds.length; i++){
+      this.clouds[i].draw();
+    }
+  }
+
+  createCloud(){
+    for(let i = 0; i < this.cloudCnt; i++){
+      const cloud = new Cloud(this.stageWidth, this.stageHeight, 3, Math.floor(Math.random() * 2));
+      cloud.create(this.app.stage);
+      this.clouds.push(cloud);
+    }
   }
 }
+
+
+
+
+
 
 window.onload = () => {
   new App();
