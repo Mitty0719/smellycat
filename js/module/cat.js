@@ -88,7 +88,7 @@ export class Cat{
   constructor(stageWidth, stageHeight, x, y){
     this.x = x;
     this.y = y;
-    this.speed = 3;
+    this.speed = 1;
     this.motion = MOTION.standright;
     this.prevMotion = null;
 
@@ -154,7 +154,6 @@ export class Cat{
         this.x += this.speed;
       }
     }
-    console.log(this.x, isCenter);
   }
   checkCenter(backgroundX){
     if(this.x > this.stageWidth / 2 && backgroundX < 0){
