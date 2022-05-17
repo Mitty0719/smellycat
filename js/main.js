@@ -1,3 +1,4 @@
+import { Background } from './module/background.js';
 import { Cat } from './module/cat.js';
 import { Text } from './module/text.js';
 
@@ -52,10 +53,8 @@ class App{
     this.app = new PIXI.Application({width: this.stageWidth, height: this.stageHeight});
     document.body.appendChild(this.app.view);
 
-    this.background = PIXI.Sprite.from('./images/noonbackground.png');
-    this.background.width = this.stageWidth * 10;
-    this.background.height = this.stageHeight;
-    this.app.stage.addChild(this.background);
+    this.background = new Background(this.stageWidth, this.stageHeight);
+    this.background.create(this.app.stage);
 
     this.cat = new Cat(this.stageWidth, this.stageHeight, 100, this.stageHeight / 1.6);
     this.app.loader.add('spritesheet', `./images/cats/black_gold_eyes.png`)
@@ -68,8 +67,9 @@ class App{
     if(keyInfo && !keyInfo.isDown){
       keyInfo.isDown = true;
       keyInfo.idle = setInterval(()=>{
-        const isCenter = this.cat.checkCenter();
+        const isCenter = this.cat.checkCenter(this.background.x);
         this.cat.move(e.code, isCenter);
+        this.background.move(e.code, isCenter);
       }, 10);
     }
   };

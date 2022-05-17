@@ -10,7 +10,6 @@ export class Text{
     this.hasShow = false;
     this.isFinish = false;
     this.fadeSpeed = fadeTime / 1000 / 60;
-
   }
 
   createText(stageWidth, stageHeight){

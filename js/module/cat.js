@@ -139,6 +139,10 @@ export class Cat{
   }
 
   move(code, isCenter){
+    if(this.x < 0){
+      this.x = 0;
+      return;
+    }
     if(code === 'ArrowLeft'){
       this.motion = MOTION.walkleft;
       if(!isCenter){
@@ -150,9 +154,10 @@ export class Cat{
         this.x += this.speed;
       }
     }
+    console.log(this.x, isCenter);
   }
-  checkCenter(){
-    if(this.x > this.stageWidth / 2){
+  checkCenter(backgroundX){
+    if(this.x > this.stageWidth / 2 && backgroundX < 0){
       return true;
     }
     return false;
