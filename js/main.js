@@ -80,6 +80,9 @@ class App{
         const isCenter = this.cat.checkCenter(this.background.x);
         this.cat.move(e.code, isCenter);
         this.background.move(e.code, isCenter);
+        for(let i = 0; i < this.clouds.length; i++){
+          this.clouds[i].move(e.code);
+        };
       }, 10);
     }
   };

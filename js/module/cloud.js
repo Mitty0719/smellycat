@@ -10,8 +10,8 @@ export class Cloud{
     this.width = this.type.width;
     this.height = this.type.height;
     this.x = this.direction === -1 ? stageWidth : -this.width;
-    this.y = (stageHeight / 6) + Math.floor(Math.random() * 50);
-    this.speed = Math.floor(Math.random() % 1, 3) + 0.2 * this.direction;
+    this.y = Math.floor(Math.random() * 40);
+    this.speed = Math.floor(Math.random() % 1, 3) + 0.2;
     this.scale = scale;
   }
 
@@ -41,5 +41,14 @@ export class Cloud{
   draw(){
     this.x += this.speed;
     this.sprite.x = this.x;
+  }
+  move(code){
+    if(code === 'ArrowLeft'){
+      this.x += Math.abs(this.speed);
+    }else if(code === 'ArrowRight'){
+      this.x += -(Math.abs(this.speed));
+    }
+    this.sprite.x = this.x;
+    console.log(this.x);
   }
 }
