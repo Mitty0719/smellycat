@@ -9,9 +9,10 @@ export class Cloud{
     this.direction = getRandomSignNumber();
     this.width = this.type.width;
     this.height = this.type.height;
-    this.x = this.direction === -1 ? stageWidth : -this.width;
+    this.x = this.direction === -1 ? stageWidth : -(this.width * scale);
     this.y = Math.floor(Math.random() * 40);
-    this.speed = Math.floor(Math.random() % 1, 3) + 0.2;
+    this.speed = (Math.floor(Math.random() % 1, 3) + 0.2) * this.direction;
+    // this.speed = 5 * this.direction;
     this.scale = scale;
   }
 
@@ -50,5 +51,13 @@ export class Cloud{
     }
     this.sprite.x = this.x;
     console.log(this.x);
+  }
+  checkOutScreen(stageWidth){
+    if(this.direction === -1 && this.x < -(this.width * this.scale)){
+      return true;
+    }else if(this.direction === 1 && this.x > stageWidth){
+      return true;
+    }
+    return false;
   }
 }

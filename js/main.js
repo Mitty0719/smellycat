@@ -22,7 +22,6 @@ class App{
     });
     this.texts = [];
     this.clouds = [];
-    this.cloudCnt = 1;
 
     this.resize();
     this.setApplication();
@@ -70,6 +69,7 @@ class App{
   createElement(){
     this.cat.create(this.app.stage);
     this.createCloud();
+    setInterval(this.createCloud.bind(this), 30000);
   }
 
   keydown(e){
@@ -103,17 +103,20 @@ class App{
       this.texts[i].draw();
     }
 
-    for(let i = 0; i < this.clouds.length; i++){
-      this.clouds[i].draw();
+    for(let cloud of this.clouds){
+      cloud.draw();
+      if(cloud.checkOutScreen(this.stageWidth)){
+        const idx = this.clouds.indexOf(cloud);
+        this.clouds.splice(idx, 1);
+      }
     }
+    console.log(this.clouds);
   }
 
   createCloud(){
-    for(let i = 0; i < this.cloudCnt; i++){
-      const cloud = new Cloud(this.stageWidth, this.stageHeight, 3, Math.floor(Math.random() * 2));
-      cloud.create(this.app.stage);
-      this.clouds.push(cloud);
-    }
+    const cloud = new Cloud(this.stageWidth, this.stageHeight, 3, Math.floor(Math.random() * 2));
+    cloud.create(this.app.stage);
+    this.clouds.push(cloud);
   }
 }
 
