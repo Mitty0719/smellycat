@@ -2,6 +2,7 @@ import { Background } from './module/background.js';
 import { Cat } from './module/cat.js';
 import { Text } from './module/text.js';
 import { Cloud } from './module/cloud.js';
+import { TreeGroup } from './module/treegroup.js';
 
 class App{
   constructor(){
@@ -56,11 +57,13 @@ class App{
 
     this.background = new Background(this.stageWidth, this.stageHeight);
     this.background.create(this.app.stage);
+    this.treeGroup = new TreeGroup();
 
     this.cat = new Cat(this.stageWidth, this.stageHeight, 100, this.stageHeight / 1.6);
     this.app.loader.add('cat', `./images/cats/black_gold_eyes.png`)
     .add('cloud1', './images/cloud/cloud1.png')
     .add('cloud2', './images/cloud/cloud2.png')
+    .add('tree', './images/tree/tree.png')
     .load(this.createElement.bind(this))
     .load(this.animate.bind(this));
 
@@ -68,6 +71,7 @@ class App{
   createElement(){
     this.cat.create(this.app.stage);
     this.createCloud();
+    this.treeGroup.create(this.app.stage, this.app.loader);
     setInterval(this.createCloud.bind(this), 30000);
   }
 
@@ -79,9 +83,12 @@ class App{
         const isCenter = this.cat.checkCenter(this.background.x);
         this.cat.move(e.code, isCenter);
         this.background.move(e.code, isCenter);
-        for(let i = 0; i < this.clouds.length; i++){
-          this.clouds[i].move(e.code);
+        for(let cloud of this.clouds){
+          cloud.move(e.code);
         };
+        for(let tree of this.treeGroup.trees){
+          tree.move(e.code);
+        }
       }, 10);
     }
   };
