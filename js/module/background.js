@@ -1,8 +1,9 @@
+const MAX_WIDTH = 10000;
 export class Background{
   constructor(stageWidth, stageHeight){
     this.x = 0;
     this.y = 0;
-    this.speed = 2;
+    this.speed = 0.5;
 
     this.resize(stageWidth, stageHeight);
   }
@@ -10,7 +11,7 @@ export class Background{
   create(stage){
     this.sprite = PIXI.Sprite.from('./images/noonbackground.png');
     stage.addChild(this.sprite);
-    this.sprite.width = this.stageWidth * 10;
+    this.sprite.width = MAX_WIDTH;
     this.sprite.height = this.stageHeight;
   }
 

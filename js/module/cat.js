@@ -112,7 +112,7 @@ export class Cat{
 
     this.sprite = new PIXI.Sprite(texture);
     this.sprite.position.set(this.x, this.y);
-    this.sprite.scale.set(3, 3);
+    this.sprite.scale.set(2, 2);
 
     stage.addChild(this.sprite);
   }

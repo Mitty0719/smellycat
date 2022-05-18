@@ -69,10 +69,10 @@ class App{
 
   }
   createElement(){
-    this.cat.create(this.app.stage);
     this.createCloud();
     this.treeGroup.create(this.app.stage, this.app.loader);
     setInterval(this.createCloud.bind(this), 30000);
+    this.cat.create(this.app.stage);
   }
 
   keydown(e){

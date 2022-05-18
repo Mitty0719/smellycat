@@ -11,7 +11,7 @@ export class Tree{
     this.y = y;
     this.scale = scale;
     this.type = ASSET_TYPE[type][Math.floor( Math.random() * ASSET_TYPE[type].length )];
-    this.speed = 2;
+    this.speed = 0.5;
   }
 
   create(stage, loader){
