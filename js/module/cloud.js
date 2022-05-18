@@ -50,7 +50,6 @@ export class Cloud{
       this.x += -(Math.abs(this.speed));
     }
     this.sprite.x = this.x;
-    console.log(this.x);
   }
   checkOutScreen(stageWidth){
     if(this.direction === -1 && this.x < -(this.width * this.scale)){

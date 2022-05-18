@@ -27,7 +27,7 @@ class App{
     this.setApplication();
     window.addEventListener('keydown', this.keydown.bind(this));
     window.addEventListener('keyup', this.keyup.bind(this));
-    window.addEventListener('resize', this.resize.bind(this));
+    // window.addEventListener('resize', this.resize.bind(this));
 
     setTimeout(()=>{
       const sampleText = new Text('S m e l l y  C a t', 'title', 1000, 1000, this.app);
@@ -38,9 +38,8 @@ class App{
   }
 
   resize(){
-    this.stageWidth = window.innerWidth;
-    this.stageHeight = window.innerHeight;
-
+    this.stageWidth = 640;
+    this.stageHeight = 480;
     if(this.app){
       this.app.width = this.stageWidth;
       this.app.height = this.stageHeight;
@@ -110,7 +109,6 @@ class App{
         this.clouds.splice(idx, 1);
       }
     }
-    console.log(this.clouds);
   }
 
   createCloud(){

@@ -34,6 +34,5 @@ export class Background{
       this.x -= this.speed;
     }
     this.draw();
-    console.log(this.x);
   }
 }

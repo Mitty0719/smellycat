@@ -156,7 +156,7 @@ export class Cat{
     }
   }
   checkCenter(backgroundX){
-    if(this.x > this.stageWidth / 2 && backgroundX < 0){
+    if((this.x + ASSET_WIDTH * 2) > this.stageWidth / 2 && backgroundX < 0){
       return true;
     }
     return false;
